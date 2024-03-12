@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.next.dao.TrainNumDetailMapper">
+  <resultMap id="BaseResultMap" type="com.next.model.TrainNumDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="train_num_id" jdbcType="INTEGER" property="trainNumId" />
+    <result column="from_station_id" jdbcType="INTEGER" property="fromStationId" />
+    <result column="from_city_id" jdbcType="INTEGER" property="fromCityId" />
+    <result column="to_station_id" jdbcType="INTEGER" property="toStationId" />
+    <result column="to_city_id" jdbcType="INTEGER" property="toCityId" />
+    <result column="station_index" jdbcType="INTEGER" property="stationIndex" />
+    <result column="relative_minute" jdbcType="INTEGER" property="relativeMinute" />
+    <result column="wait_minute" jdbcType="INTEGER" property="waitMinute" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, train_num_id, from_station_id, from_city_id, to_station_id, to_city_id, station_index, 
+    relative_minute, wait_minute, money
+  </sql>
+  <select id="selectByExample" parameterType="com.next.model.TrainNumDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from train_num_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from train_num_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from train_num_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.next.model.TrainNumDetailExample">
+    delete from train_num_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.next.model.TrainNumDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into train_num_detail (train_num_id, from_station_id, from_city_id, 
+      to_station_id, to_city_id, station_index, 
+      relative_minute, wait_minute, money
+      )
+    values (#{trainNumId,jdbcType=INTEGER}, #{fromStationId,jdbcType=INTEGER}, #{fromCityId,jdbcType=INTEGER}, 
+      #{toStationId,jdbcType=INTEGER}, #{toCityId,jdbcType=INTEGER}, #{stationIndex,jdbcType=INTEGER}, 
+      #{relativeMinute,jdbcType=INTEGER}, #{waitMinute,jdbcType=INTEGER}, #{money,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.next.model.TrainNumDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into train_num_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="trainNumId != null">
+        train_num_id,
+      </if>
+      <if test="fromStationId != null">
+        from_station_id,
+      </if>
+      <if test="fromCityId != null">
+        from_city_id,
+      </if>
+      <if test="toStationId != null">
+        to_station_id,
+      </if>
+      <if test="toCityId != null">
+        to_city_id,
+      </if>
+      <if test="stationIndex != null">
+        station_index,
+      </if>
+      <if test="relativeMinute != null">
+        relative_minute,
+      </if>
+      <if test="waitMinute != null">
+        wait_minute,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="trainNumId != null">
+        #{trainNumId,jdbcType=INTEGER},
+      </if>
+      <if test="fromStationId != null">
+        #{fromStationId,jdbcType=INTEGER},
+      </if>
+      <if test="fromCityId != null">
+        #{fromCityId,jdbcType=INTEGER},
+      </if>
+      <if test="toStationId != null">
+        #{toStationId,jdbcType=INTEGER},
+      </if>
+      <if test="toCityId != null">
+        #{toCityId,jdbcType=INTEGER},
+      </if>
+      <if test="stationIndex != null">
+        #{stationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="relativeMinute != null">
+        #{relativeMinute,jdbcType=INTEGER},
+      </if>
+      <if test="waitMinute != null">
+        #{waitMinute,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.next.model.TrainNumDetailExample" resultType="java.lang.Long">
+    select count(*) from train_num_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update train_num_detail
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=INTEGER},
+      </if>
+      <if test="row.trainNumId != null">
+        train_num_id = #{row.trainNumId,jdbcType=INTEGER},
+      </if>
+      <if test="row.fromStationId != null">
+        from_station_id = #{row.fromStationId,jdbcType=INTEGER},
+      </if>
+      <if test="row.fromCityId != null">
+        from_city_id = #{row.fromCityId,jdbcType=INTEGER},
+      </if>
+      <if test="row.toStationId != null">
+        to_station_id = #{row.toStationId,jdbcType=INTEGER},
+      </if>
+      <if test="row.toCityId != null">
+        to_city_id = #{row.toCityId,jdbcType=INTEGER},
+      </if>
+      <if test="row.stationIndex != null">
+        station_index = #{row.stationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="row.relativeMinute != null">
+        relative_minute = #{row.relativeMinute,jdbcType=INTEGER},
+      </if>
+      <if test="row.waitMinute != null">
+        wait_minute = #{row.waitMinute,jdbcType=INTEGER},
+      </if>
+      <if test="row.money != null">
+        money = #{row.money,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update train_num_detail
+    set id = #{row.id,jdbcType=INTEGER},
+      train_num_id = #{row.trainNumId,jdbcType=INTEGER},
+      from_station_id = #{row.fromStationId,jdbcType=INTEGER},
+      from_city_id = #{row.fromCityId,jdbcType=INTEGER},
+      to_station_id = #{row.toStationId,jdbcType=INTEGER},
+      to_city_id = #{row.toCityId,jdbcType=INTEGER},
+      station_index = #{row.stationIndex,jdbcType=INTEGER},
+      relative_minute = #{row.relativeMinute,jdbcType=INTEGER},
+      wait_minute = #{row.waitMinute,jdbcType=INTEGER},
+      money = #{row.money,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.next.model.TrainNumDetail">
+    update train_num_detail
+    <set>
+      <if test="trainNumId != null">
+        train_num_id = #{trainNumId,jdbcType=INTEGER},
+      </if>
+      <if test="fromStationId != null">
+        from_station_id = #{fromStationId,jdbcType=INTEGER},
+      </if>
+      <if test="fromCityId != null">
+        from_city_id = #{fromCityId,jdbcType=INTEGER},
+      </if>
+      <if test="toStationId != null">
+        to_station_id = #{toStationId,jdbcType=INTEGER},
+      </if>
+      <if test="toCityId != null">
+        to_city_id = #{toCityId,jdbcType=INTEGER},
+      </if>
+      <if test="stationIndex != null">
+        station_index = #{stationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="relativeMinute != null">
+        relative_minute = #{relativeMinute,jdbcType=INTEGER},
+      </if>
+      <if test="waitMinute != null">
+        wait_minute = #{waitMinute,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.next.model.TrainNumDetail">
+    update train_num_detail
+    set train_num_id = #{trainNumId,jdbcType=INTEGER},
+      from_station_id = #{fromStationId,jdbcType=INTEGER},
+      from_city_id = #{fromCityId,jdbcType=INTEGER},
+      to_station_id = #{toStationId,jdbcType=INTEGER},
+      to_city_id = #{toCityId,jdbcType=INTEGER},
+      station_index = #{stationIndex,jdbcType=INTEGER},
+      relative_minute = #{relativeMinute,jdbcType=INTEGER},
+      wait_minute = #{waitMinute,jdbcType=INTEGER},
+      money = #{money,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
